@@ -1,4 +1,3 @@
-// EditUser.js
 import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 
@@ -6,12 +5,11 @@ function EditUser({ user, onUpdate, onClose }) {
     const [employeeId, setEmployeeId] = useState(user.employeeId || '');
     const [username, setUsername] = useState(user.username || '');
     const [password, setPassword] = useState(user.password || '');
-    const [name, setName] = useState(user.name || '');
-    const [status, setStatus] = useState(user.status || '');
+    const [status, setStatus] = useState(user.status || false);
     const [position, setPosition] = useState(user.position || '');
 
     const handleSubmit = () => {
-        const updatedUser = { ...user, employeeId, username, password, name, status, position };
+        const updatedUser = { ...user, employeeId, username, password, status, position };
         onUpdate(updatedUser);
     };
 
@@ -42,27 +40,18 @@ function EditUser({ user, onUpdate, onClose }) {
                 <div className="form-group">
                     <label>Password</label>
                     <input
-                        type="password"
+                        type="text" // เปลี่ยนเป็น type="text" เพื่อให้แสดงรหัสผ่านตลอด
                         className="form-control"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
                 </div>
                 <div className="form-group">
-                    <label>Name</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                    />
-                </div>
-                <div className="form-group">
                     <label>Status</label>
                     <select
                         className="form-control"
-                        value={status}
-                        onChange={(e) => setStatus(e.target.value)}
+                        value={status ? 'Active' : 'Inactive'}
+                        onChange={(e) => setStatus(e.target.value === 'Active')}
                     >
                         <option value="Active">Active</option>
                         <option value="Inactive">Inactive</option>

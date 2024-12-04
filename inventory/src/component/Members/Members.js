@@ -9,8 +9,9 @@ function Members() {
     const [showEditModal, setShowEditModal] = useState(false);
     const [selectedUser, setSelectedUser] = useState(null);
     const [userList, setUserList] = useState([
-        { id: 1, name: 'Tanasiri Benajareporn', status: true },
-        // Add more users here if needed
+        { id: 1, employeeId: 'E001', username: 'Tanasiri.B', password: 'password123', status: true, position: 'Developer' },
+        { id: 2, employeeId: 'E002', username: 'Nattapong.P', password: 'password123', status: false, position: 'Designer' },
+        // สามารถเพิ่มสมาชิกเพิ่มเติมได้ที่นี่
     ]);
 
     const handleToggle = (user) => {
@@ -67,19 +68,18 @@ function Members() {
                             <table className="table table-striped projects">
                                 <thead>
                                     <tr>
-                                        <th style={{ width: '5%' }}>No</th>
-                                        <th style={{ width: '50%' }}>Name</th>
+                                        <th style={{ width: '20%' }}>Employee ID</th>
+                                        <th style={{ width: '30%' }}>Username</th>
                                         <th style={{ width: '20%' }} className="text-center">Status</th>
-                                        <th style={{ width: '25%' }} className="text-center">Actions</th>
+                                        <th style={{ width: '30%' }} className="text-center">Position</th> {/* เพิ่มคอลัมน์ตำแหน่ง */}
+                                        <th style={{ width: '30%' }} className="text-center">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {userList.map((user, index) => (
+                                    {userList.map((user) => (
                                         <tr key={user.id}>
-                                            <td>{index + 1}</td>
-                                            <td>
-                                                <a>{user.name}</a><br />
-                                            </td>
+                                            <td>{user.employeeId}</td>
+                                            <td>{user.username}</td>
                                             <td className="project-state text-center">
                                                 <button
                                                     className={`btn btn-sm ${user.status ? 'btn-success' : 'btn-danger'}`}
@@ -88,6 +88,7 @@ function Members() {
                                                     {user.status ? 'On' : 'Off'}
                                                 </button>
                                             </td>
+                                            <td>{user.position}</td> {/* แสดงตำแหน่ง */}
                                             <td className="project-actions text-right">
                                                 <div className="btn-group" role="group" aria-label="Basic example">
                                                     <button className="btn btn-outline-primary btn-sm" onClick={() => handleOpenModal(user)}>

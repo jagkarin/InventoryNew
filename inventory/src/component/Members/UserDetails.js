@@ -1,32 +1,51 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from 'react';
+import { Modal, Button } from 'react-bootstrap';
 
-const UserDetails = ({ user, onClose }) => {
+function UserDetails({ user, onClose }) {
+    const [showPassword, setShowPassword] = useState(false); // สถานะการแสดงซ่อนรหัสผ่าน
 
     return (
-        <div className="modal" style={{ display: 'block' }}>
-            <div className="modal-dialog">
-                <div className="modal-content">
-                    <div className="modal-header">
-                        <h5 className="modal-title">User Details</h5>
-                        {/* Removed the Close button */}
-                    </div>
-                    <div className="modal-body">
-                        <p><strong>Name:</strong> {user.name}</p>
-                        <p><strong>Status:</strong> {user.status ? 'Active' : 'Inactive'}</p>
-                    </div>
-                    <div className="modal-footer">
-                        <button type="button" className="btn btn-secondary" onClick={onClose}>Close</button>
-                    </div>
+        <Modal show={true} onHide={onClose}>
+            <Modal.Header closeButton>
+                <Modal.Title>User Details</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <h5>Employee Information</h5>
+                <div className="mb-3">
+                    <strong>Employee ID:</strong>
+                    <span className="ms-2">{user.employeeId}</span>
                 </div>
-            </div>
-        </div>
+                <div className="mb-3">
+                    <strong>Username:</strong>
+                    <span className="ms-2">{user.username}</span>
+                </div>
+                <div className="mb-3">
+                    <strong>Password:</strong>
+                    <span className="ms-2">{showPassword ? user.password : '******'}</span>
+                    <Button 
+                        variant="link" 
+                        className="ms-2" 
+                        onClick={() => setShowPassword(!showPassword)}
+                    >
+                        {showPassword ? '🙈 Hide' : '👁️ Show'} {/* ปรับสัญลักษณ์และข้อความ */}
+                    </Button>
+                </div>
+                <div className="mb-3">
+                    <strong>Status:</strong>
+                    <span className="ms-2">{user.status ? 'Active' : 'Inactive'}</span>
+                </div>
+                <div className="mb-3">
+                    <strong>Position:</strong>
+                    <span className="ms-2">{user.position}</span>
+                </div>
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" onClick={onClose}>
+                    Close
+                </Button>
+            </Modal.Footer>
+        </Modal>
     );
-};
-
-UserDetails.propTypes = {
-    user: PropTypes.object.isRequired,
-    onClose: PropTypes.func.isRequired,
-};
+}
 
 export default UserDetails;
