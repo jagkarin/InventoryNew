@@ -1,24 +1,22 @@
 import React, { useState } from 'react';
-import './styles.css'; // Ensure this file exists
+import './styles.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import UserDetails from '../UserDetails';
-import EditUser from '../EditUser';
+import UserDetails from './UserDetails';
+import EditUser from './EditUser';
 
 function Members() {
     const [showModal, setShowModal] = useState(false);
     const [showEditModal, setShowEditModal] = useState(false);
     const [selectedUser, setSelectedUser] = useState(null);
     const [userList, setUserList] = useState([
-        { id: 1, name: 'Tanasiri Benajareporn', status: 'Active' },
-        // You can add more users here for testing
+        { id: 1, name: 'Tanasiri Benajareporn', status: true },
+        // Add more users here if needed
     ]);
 
     const handleToggle = (user) => {
-        // Update the status of the user
-        const updatedUsers = userList.map(u => 
-            u.id === user.id ? { ...u, status: u.status === 'Active' ? 'Inactive' : 'Active' } : u
-        );
-        setUserList(updatedUsers);
+        const updatedUser = { ...user, status: !user.status };
+        const updatedUserList = userList.map(u => (u.id === user.id ? updatedUser : u));
+        setUserList(updatedUserList);
     };
 
     const handleOpenModal = (user) => {
@@ -44,7 +42,7 @@ function Members() {
     const handleUpdateUser = (updatedUser) => {
         const updatedUserList = userList.map(user => (user.id === updatedUser.id ? updatedUser : user));
         setUserList(updatedUserList);
-        handleCloseEditModal(); // Close modal after update
+        handleCloseEditModal();
     };
 
     return (
@@ -52,14 +50,8 @@ function Members() {
             <section className="content-header">
                 <div className="container-fluid">
                     <div className="row mb-2">
-                        <div className="col-sm-6">
-                            <h1>สมาชิก</h1>
-                        </div>
-                        <div className="col-sm-6">
-                            <ol className="breadcrumb float-sm-right">
-                                <li className="breadcrumb-item"><a href="#">ระบบคลังสินค้า</a></li>
-                                <li className="breadcrumb-item active">สมาชิก</li>
-                            </ol>
+                        <div className="col-sm-12">
+                            <h1>Members</h1>
                         </div>
                     </div>
                 </div>
@@ -68,7 +60,7 @@ function Members() {
             <section className="content">
                 <div className="card">
                     <div className="card-header">
-                        <h3 className="card-title">Members</h3>
+                        <h3 className="card-title">Member List</h3>
                     </div>
                     <div className="card-body">
                         <div className="table-responsive">
@@ -89,8 +81,11 @@ function Members() {
                                                 <a>{user.name}</a><br />
                                             </td>
                                             <td className="project-state text-center">
-                                                <button className={`btn btn-sm ${user.status === 'Active' ? 'btn-success' : 'btn-danger'}`} onClick={() => handleToggle(user)}>
-                                                    {user.status === 'Active' ? 'On' : 'Off'}
+                                                <button
+                                                    className={`btn btn-sm ${user.status ? 'btn-success' : 'btn-danger'}`}
+                                                    onClick={() => handleToggle(user)}
+                                                >
+                                                    {user.status ? 'On' : 'Off'}
                                                 </button>
                                             </td>
                                             <td className="project-actions text-right">
