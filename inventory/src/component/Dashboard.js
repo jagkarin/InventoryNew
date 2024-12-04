@@ -36,8 +36,26 @@ function Dashboard() {
     };
 
     return (
-        <div>
+        <div style={{ padding: '20px' }}>
             <h1>Welcome to the Dashboard</h1>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
+                <div style={cardStyle}>
+                    <h2>Total Sales</h2>
+                    <p>1,234</p>
+                </div>
+                <div style={cardStyle}>
+                    <h2>New Customers</h2>
+                    <p>123</p>
+                </div>
+                <div style={cardStyle}>
+                    <h2>Orders</h2>
+                    <p>456</p>
+                </div>
+                <div style={cardStyle}>
+                    <h2>Returns</h2>
+                    <p>12</p>
+                </div>
+            </div>
             <div style={{ width: '80%', margin: '0 auto' }}>
                 <Bar data={data} options={options} />
             </div>
@@ -45,5 +63,16 @@ function Dashboard() {
         </div>
     );
 }
+
+// สไตล์สำหรับกล่อง
+const cardStyle = {
+    flex: '1',
+    margin: '0 10px',
+    padding: '20px',
+    backgroundColor: '#fff',
+    borderRadius: '5px',
+    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+    textAlign: 'center',
+};
 
 export default Dashboard;
