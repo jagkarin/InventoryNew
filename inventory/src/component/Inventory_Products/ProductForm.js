@@ -1,6 +1,7 @@
 import React from 'react';
 import './css/product.css';
 
+
 const ProductForm = ({ newProduct, setNewProduct, isEditing, handleProduct, deleteProduct }) => {
     return (
         <div className="container mt-5">
