@@ -1,19 +1,20 @@
-// Dashboard.js
-import React from 'react';
+import React, { useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 
 // ลงทะเบียนส่วนประกอบที่จะใช้งานใน Chart.js
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-function Dashboard() {
-    // ข้อมูลสำหรับกราฟ
-    const data = {
+function WarehouseDashboard() {
+    const [chartData, setChartData] = useState(null); // ใช้สำหรับเก็บข้อมูลกราฟ
+
+    // ข้อมูลสำหรับกราฟสต็อกสินค้า
+    const stockData = {
         labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
         datasets: [
             {
-                label: 'Sales',
-                data: [65, 59, 80, 81, 56, 55, 40],
+                label: 'สต็อกสินค้า',
+                data: [200, 180, 150, 160, 190, 220, 250],
                 backgroundColor: 'rgba(75, 192, 192, 0.6)',
                 borderColor: 'rgba(75, 192, 192, 1)',
                 borderWidth: 1,
@@ -21,45 +22,82 @@ function Dashboard() {
         ],
     };
 
-    // ตัวเลือกกราฟ
-    const options = {
-        responsive: true,
-        plugins: {
-            legend: {
-                position: 'top',
+    // ข้อมูลสำหรับกราฟการจัดส่งสินค้า
+    const deliveryData = {
+        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        datasets: [
+            {
+                label: 'การจัดส่งสินค้า',
+                data: [50, 70, 60, 90, 80, 100, 120],
+                backgroundColor: 'rgba(153, 102, 255, 0.6)',
+                borderColor: 'rgba(153, 102, 255, 1)',
+                borderWidth: 1,
             },
-            title: {
-                display: true,
-                text: 'Monthly Sales Data',
+        ],
+    };
+
+    // ข้อมูลสำหรับกราฟการเบิกสินค้า
+    const withdrawalData = {
+        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        datasets: [
+            {
+                label: 'การเบิกสินค้า',
+                data: [20, 30, 25, 40, 35, 50, 45],
+                backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1,
             },
-        },
+        ],
+    };
+
+    // ข้อมูลสำหรับกราฟการคืนสินค้า
+    const returnsData = {
+        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        datasets: [
+            {
+                label: 'การคืนสินค้า',
+                data: [5, 10, 8, 12, 15, 20, 25],
+                backgroundColor: 'rgba(255, 206, 86, 0.6)',
+                borderColor: 'rgba(255, 206, 86, 1)',
+                borderWidth: 1,
+            },
+        ],
+    };
+
+    const handleButtonClick = (data) => {
+        setChartData(data); // เปลี่ยนข้อมูลกราฟตามปุ่มที่กด
     };
 
     return (
         <div style={{ padding: '20px' }}>
-            <h1>Welcome to the Dashboard</h1>
+            <h1>แดชบอร์ดคลังสินค้า</h1>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
                 <div style={cardStyle}>
-                    <h2>Total Sales</h2>
-                    <p>1,234</p>
+                    <h2>สต็อกสินค้า</h2>
+                    <p>200 หน่วย</p>
+                    <button onClick={() => handleButtonClick(stockData)}>แสดงกราฟสต็อกสินค้า</button>
                 </div>
                 <div style={cardStyle}>
-                    <h2>New Customers</h2>
-                    <p>123</p>
+                    <h2>การจัดส่งสินค้า</h2>
+                    <p>120 รายการ</p>
+                    <button onClick={() => handleButtonClick(deliveryData)}>แสดงกราฟการจัดส่ง</button>
                 </div>
                 <div style={cardStyle}>
-                    <h2>Orders</h2>
-                    <p>456</p>
+                    <h2>การเบิกสินค้า</h2>
+                    <p>45 รายการ</p>
+                    <button onClick={() => handleButtonClick(withdrawalData)}>แสดงกราฟการเบิก</button>
                 </div>
                 <div style={cardStyle}>
-                    <h2>Returns</h2>
-                    <p>12</p>
+                    <h2>การคืนสินค้า</h2>
+                    <p>25 รายการ</p>
+                    <button onClick={() => handleButtonClick(returnsData)}>แสดงกราฟการคืน</button>
                 </div>
             </div>
-            <div style={{ width: '80%', margin: '0 auto' }}>
-                <Bar data={data} options={options} />
-            </div>
-            {/* เพิ่มเนื้อหา Dashboard ที่คุณต้องการ */}
+            {chartData && (
+                <div style={{ width: '60%', margin: '20px auto' }}>
+                    <Bar data={chartData} options={{ responsive: true }} />
+                </div>
+            )}
         </div>
     );
 }
@@ -75,4 +113,4 @@ const cardStyle = {
     textAlign: 'center',
 };
 
-export default Dashboard;
+export default WarehouseDashboard;
